@@ -36,8 +36,13 @@ def generate_meme(path=None, body=None, author=None):
             raise Exception('Author Required if Body is Used')
         quote = QuoteModel(author, body)
 
-    meme = MemeEngine('./tmp')
+    static_path = './static'
+    if not os.path.isdir(static_path):
+        os.mkdir(static_path) 
+
+    meme = MemeEngine(static_path)
     path = meme.make_meme(img, quote.body, quote.author)
+
     return path
 
 
