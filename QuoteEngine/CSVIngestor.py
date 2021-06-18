@@ -4,11 +4,18 @@ import pandas
 from .IngestorInterface import IngestorInterface
 from .QuoteModel import QuoteModel
 
+
 class CSVIngestor(IngestorInterface):
+    """Concrete startegy object class for CSV files """
     allowed_extensions = ['csv']
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
+        """Load quotes from location
+
+        Arguments:
+            path {str} -- the CSV file location, to load quotes.
+        """
         if not cls.can_ingest(path):
             raise Exception('Can ingest CSV files only!')
 

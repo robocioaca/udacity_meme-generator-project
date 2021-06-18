@@ -3,11 +3,18 @@ from typing import List
 from .IngestorInterface import IngestorInterface
 from .QuoteModel import QuoteModel
 
+
 class TextIngestor(IngestorInterface):
+    """Concrete startegy object class for TXT files """
     allowed_extensions = ['txt']
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
+        """Load quotes from location
+
+        Arguments:
+            path {str} -- the TXT file location, to load quotes.
+        """
         if not cls.can_ingest(path):
             raise Exception('Can ingest TXT files only!')
 

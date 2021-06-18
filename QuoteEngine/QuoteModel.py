@@ -1,15 +1,15 @@
 class QuoteModel():
-    """
-    Quotes which will be later added to memes.
+    """Quotes which will be later added to memes."""
 
-    Parameters:
-    author (str): The quote author
-    body (str): The quote contents
-    """
-    def __init__(self, author: str, body: str):
+    def __init__(self, author: str, body: str) -> None:
+        """Build a quote
+
+        Arguments:
+            author {str} -- quote's author.
+            body {str} -- the actual quote message.
+        """
         self.author = author
         self.body = body
-
 
     def __repr__(self):
         """Pretty print oneself"""
