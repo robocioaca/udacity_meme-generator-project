@@ -92,6 +92,14 @@ The app uses the `QuoteEngine` and `MemeGenerator` Modules to generate a random 
 
 It uses the `requests` package to fetch an image from a user submitted URL.
 
+##  Test suite
+
+I've written a barebones test-suite for the `QuoteEngine` module - using `unittest`. The `MemeGenerator` module is quite hard to test, due to the randomness requirenent. To run all tests run in a terminal:
+
+```
+python3 -m unittest --verbose
+```
+
 ## License
 
 The content of this repository is licensed under a

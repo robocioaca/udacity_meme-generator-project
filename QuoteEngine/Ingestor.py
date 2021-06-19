@@ -21,6 +21,10 @@ class Ingestor(IngestorInterface):
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
         """Flexible loading of quotes, according to filetype"""
+        joy = False
         for ingestor in cls.ingestors:
             if ingestor.can_ingest(path):
+                joy = True
                 return ingestor.parse(path)
+        if not joy:
+            raise Exception("Could not find suitable ingestor!")

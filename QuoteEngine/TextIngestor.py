@@ -21,8 +21,14 @@ class TextIngestor(IngestorInterface):
         bag_of_quotes = []
         with open(path, 'r') as infile:
             for line in infile:
-                body, author = line.split(' - ')
-                new_quote = QuoteModel(author, body)
-                bag_of_quotes.append(new_quote)
+                try:
+                    body, author = line.split(' - ')
+                except ValueError:
+                    # ignore lines which don't abide to the expected 
+                    # formatting "body" - author
+                    pass
+                else:
+                    new_quote = QuoteModel(author.strip(), body.strip('"'))
+                    bag_of_quotes.append(new_quote)
 
         return bag_of_quotes
