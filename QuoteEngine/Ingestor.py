@@ -10,6 +10,13 @@ from .DocxIngestor import DocxIngestor
 from .PDFIngestor import PDFIngestor
 
 
+class NoIngestorFound(Exception):
+    """Raised when no suitable ingestor could be found"""
+
+    def __init__(self, message):
+        self.message = message
+
+
 class Ingestor(IngestorInterface):
     """This  will encapsulate all concrete Ingestor classes.
 
@@ -27,4 +34,5 @@ class Ingestor(IngestorInterface):
                 joy = True
                 return ingestor.parse(path)
         if not joy:
-            raise Exception("Could not find suitable ingestor!")
+            raise NoIngestorFound(
+                f'Could not find suitable ingestor for: {path}')

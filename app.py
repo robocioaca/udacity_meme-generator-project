@@ -4,7 +4,7 @@ import os
 import requests
 from flask import Flask, render_template, abort, request
 
-from QuoteEngine import QuoteModel, Ingestor
+from QuoteEngine import QuoteModel, Ingestor, NoIngestorFound
 from MemeGenerator import MemeEngine
 
 app = Flask(__name__)
@@ -19,13 +19,18 @@ meme = MemeEngine(static_path)
 def setup():
     """ Load all resources """
 
-    quote_files = ['./_data/DogQuotes/DogQuotesTXT.txt',
-                   './_data/DogQuotes/DogQuotesDOCX.docx',
-                   './_data/DogQuotes/DogQuotesPDF.pdf',
-                   './_data/DogQuotes/DogQuotesCSV.csv']
+    quote_folder = "./_data/DogQuotes/"
+    quote_files = []
 
-    quotes = list(itertools.chain(
-        *map(lambda x: Ingestor.parse(x), quote_files)))
+    for root, dirs, files in os.walk(quote_folder):
+        quote_files.extend([os.path.join(root, name) for name in files])
+
+    quotes = []
+    for file in quote_files:
+        try:
+            quotes.extend(Ingestor.parse(file))
+        except NoIngestorFound as e:
+            print(f'{e.message}')
 
     images_path = "./_data/photos/dog/"
 

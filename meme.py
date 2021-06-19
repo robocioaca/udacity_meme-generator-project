@@ -1,7 +1,8 @@
 import os
 import random
+import itertools
 
-from QuoteEngine import QuoteModel, Ingestor
+from QuoteEngine import QuoteModel, Ingestor, NoIngestorFound
 from MemeGenerator import MemeEngine
 import argparse
 
@@ -15,20 +16,25 @@ def generate_meme(path=None, body=None, author=None):
         images = "./_data/photos/dog/"
         imgs = []
         for root, dirs, files in os.walk(images):
-            imgs = [os.path.join(root, name) for name in files]
+            imgs.extend([os.path.join(root, name) for name in files])
 
         img = random.choice(imgs)
     else:
         img = path[0]
 
     if body is None:
-        quote_files = ['./_data/DogQuotes/DogQuotesTXT.txt',
-                       './_data/DogQuotes/DogQuotesDOCX.docx',
-                       './_data/DogQuotes/DogQuotesPDF.pdf',
-                       './_data/DogQuotes/DogQuotesCSV.csv']
+        quote_folder = "./_data/DogQuotes/"
+        quote_files = []
+
+        for root, dirs, files in os.walk(quote_folder):
+            quote_files.extend([os.path.join(root, name) for name in files])
+
         quotes = []
-        for f in quote_files:
-            quotes.extend(Ingestor.parse(f))
+        for file in quote_files:
+            try:
+                quotes.extend(Ingestor.parse(file))
+            except NoIngestorFound as e:
+                print(f'{e.message}')
 
         quote = random.choice(quotes)
     else:
@@ -38,7 +44,7 @@ def generate_meme(path=None, body=None, author=None):
 
     static_path = './static'
     if not os.path.isdir(static_path):
-        os.mkdir(static_path) 
+        os.mkdir(static_path)
 
     meme = MemeEngine(static_path)
     path = meme.make_meme(img, quote.body, quote.author)
@@ -59,6 +65,5 @@ if __name__ == "__main__":
                         help="contemporary sage, fountain of such wisdom")
 
     args = parser.parse_args()
-    print(args)
 
     print(generate_meme(args.path, args.body, args.author))

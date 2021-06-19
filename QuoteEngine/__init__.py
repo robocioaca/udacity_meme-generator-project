@@ -1,6 +1,6 @@
 from .QuoteModel import QuoteModel
 
-from .Ingestor import Ingestor
+from .Ingestor import Ingestor, NoIngestorFound
 
 from .TextIngestor import TextIngestor
 from .CSVIngestor import CSVIngestor
