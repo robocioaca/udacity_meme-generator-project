@@ -32,7 +32,7 @@ git clone --depth 1 https://github.com/robocioaca/udacity_meme-generator-project
 I've developed and tested my code on a Linux machine, running `Python 3.9.5`. YMMV. Please create a virtual environment and load the specified [requirements](requirements.txt):
 
 ```
-python -m venv venv
+python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
@@ -94,7 +94,7 @@ It uses the `requests` package to fetch an image from a user submitted URL.
 
 ##  Test suite
 
-I've written a barebones test-suite for the `QuoteEngine` module - using `unittest`. The `MemeGenerator` module is quite hard to test, due to the randomness requirenent. To run all tests run in a terminal:
+I've written a barebones test-suite for the `QuoteEngine` module - using `unittest`. The `MemeGenerator` module is quite hard to test, due to the randomness requirement. To run all tests run in a terminal:
 
 ```
 python3 -m unittest --verbose
