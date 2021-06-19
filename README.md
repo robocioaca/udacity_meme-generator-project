@@ -80,6 +80,14 @@ The script returns a relative path to a generated image. If any argument is not 
 ###  A simple Flask web service
 The project contains a barebones [Flask](https://flask.palletsprojects.com/en/2.0.x/) app code in `app.py`. 
 
+To start the app on a local machine:
+
+```
+export FLASK_APP=app.py
+flask run --host 0.0.0.0 --port 3000 --reload
+```
+then open the link provided in the console.
+
 The app uses the `QuoteEngine` and `MemeGenerator` Modules to generate a random captioned image.
 
 It uses the `requests` package to fetch an image from a user submitted URL.
